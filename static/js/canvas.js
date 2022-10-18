@@ -4,15 +4,11 @@ const ctx = canvas.getContext('2d');
 
 const canvasOffsetX = canvas.offsetLeft;
 const canvasOffsetY = canvas.offsetTop;
-const toolbarOffsetBottom = toolbar.offsetTop;
+const toolbarOffsetY = toolbar.offsetTop;
 
-canvas.width = window.innerWidth - canvasOffsetX;
-canvas.height = window.innerHeight - canvasOffsetY - 115.3;
+canvas.width = window.innerWidth - canvasOffsetX - 4;
+canvas.height = window.innerHeight - (toolbarOffsetY) + 80;
 
-console.log(window.innerHeight)
-console.log(toolbar.offsetHeight)
-console.log(toolbar.offsetTop)
-console.log(toolbar)
 
 let isPainting = false;
 let lineWidth = 5;

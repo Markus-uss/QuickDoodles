@@ -3,18 +3,19 @@ body {
     color: white;
 }
 
-.container {
-    height: 95vh;
+.drawing-board {
+    position: relative;
+    bottom:-4px;
 }
 
-.drawing-board {
-    height: 87.5%;
+#drawing-board {
+    border: 2px solid;
+    border-color: black;
 }
 
 #toolbar {
     background-color: #202020;
     padding: 1rem;
-    height: 12.5%;
 }
 
 #toolbar h1 {
