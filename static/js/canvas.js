@@ -1,14 +1,20 @@
 const canvas = document.getElementById('drawing-board');
 const toolbar = document.getElementById('toolbar');
 const ctx = canvas.getContext('2d');
+var image_list = new Array();
 
 const canvasOffsetX = canvas.offsetLeft;
 const canvasOffsetY = canvas.offsetTop;
 const toolbarOffsetY = toolbar.offsetTop;
 
 canvas.width = window.innerWidth - canvasOffsetX - 4;
-canvas.height = window.innerHeight - (toolbarOffsetY) + 80;
+canvas.height = window.innerHeight - toolbarOffsetY + 80;
 
+if (window.innerHeight <= 146) {
+    console.log("too small")
+    ctx.font = "20px Arial";
+    ctx.fillText("Too Small!!! Please expand your browser and reload", 10, 50);
+} 
 
 let isPainting = false;
 let lineWidth = 5;
@@ -18,6 +24,19 @@ let startY;
 toolbar.addEventListener('click', e => {
     if (e.target.id === 'clear') {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    else if (e.target.id === 'save') {
+        image = canvas.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");
+        var link = document.createElement('a');
+        link.download = "my-image.png";
+        link.href = image;
+        link.click();   
+    }  
+    else if (e.target.id === 'finalize') {
+        console.log('done')
+        image = canvas.toDataURL("image/png", 1.0);
+        image_list.push(image)
+        console.log(image_list)
     }
 });
 

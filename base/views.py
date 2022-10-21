@@ -6,3 +6,6 @@ def home(request):
 
 def canvas(request):
     return render(request, 'base/canvas.html')
+
+def finalize(request):
+    return render(request, 'base/finalize.html')

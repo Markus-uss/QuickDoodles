@@ -12,5 +12,8 @@ body {
 
 .navbar {
     padding: 8px;
-    /* height: 5vh; */
+}
+
+a {
+    text-decoration: none;
 }
