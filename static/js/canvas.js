@@ -2,8 +2,10 @@ const canvas = document.getElementById('drawing-board');
 const toolbar = document.getElementById('toolbar');
 const time_display = document.getElementById('timer')
 var time = document.getElementById('timer').innerText.split(" ")[0];
+const start_time = time
 const frames = document.getElementById('frames').innerText;
-const image_holder = document.getElementById('image_holder');
+const popup_display = document.getElementById('popup-1')
+const popup_content = document.getElementById('content')
 const fps = time / frames;
 const ctx = canvas.getContext('2d');
 
@@ -16,6 +18,10 @@ function changeTime(text) {
 function saveImage() {
     image = canvas.toDataURL("image/png", 1.0);
     image_list.push(image)
+}
+
+function togglePopup() {
+    popup_display.classList.toggle("active");
 }
 
 if (time == -1) {
@@ -32,11 +38,12 @@ function countdown() {
             changeTime(time + ' Seconds');
             countdown();
         }
+        else {
+            if (!popup_display.classList[1] && time != -1) {
+                togglePopup()
+            }
+        }
     }, 1000)
-}
-
-function togglePopup(){
-    document.getElementById("popup-1").classList.toggle("active");
 }
 
 const canvasOffsetX = canvas.offsetLeft;
@@ -62,17 +69,30 @@ toolbar.addEventListener('click', e => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
     else if (e.target.id === 'save') {
-        image = canvas.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");
+        image = canvas.toDataURL("QuickDoodle/png", 1.0).replace("QuickDoodle/png", "image/octet-stream");
         var link = document.createElement('a');
-        link.download = "my-image.png";
+        link.download = "QuickDoodle.png";
         link.href = image;
         link.click();   
     }  
     else if (e.target.id === 'finalize') {
         saveImage()
-        image_holder.value = image_list
     }
 });
+
+popup_content.addEventListener('click', e => {
+    if (e.target.id === 'continue') {
+        time += parseInt(start_time);
+        if (time == start_time) {
+            countdown();
+        }
+        togglePopup();
+    }
+
+    if (e.target.id === 'render') {
+        console.log('rendering')
+    }
+})
 
 toolbar.addEventListener('change', e => {
     if(e.target.id === 'stroke') {

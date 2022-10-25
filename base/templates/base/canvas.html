@@ -18,16 +18,15 @@
         <span id="frames">{{frame}}</span>
     </div>
     <div class="popup" id="popup-1">
-        <div class="overlay"></div>
-        <div class="content">
+        <div class="overlay " onclick="togglePopup()"></div>
+        <div class="content" id="content">
             <div class="close-btn" onclick="togglePopup()">&times;</div>
-            <h2>Drawing Timelapse</h2>
-            <p>Some test information</p>
-            <p>AAAAAAAAAA</p>
+            <h2>Times Up!!!</h2>
+            <button id="continue">Add {{time}} More Seconds</button>
+            <button id="render">Render</button>
         </div>
     </div>
 </section>
-
 
 <script src="{% static 'js/canvas.js' %}"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/canvas.css' %}">
