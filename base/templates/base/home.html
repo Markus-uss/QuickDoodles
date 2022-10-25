@@ -2,5 +2,24 @@
 
 {% block content %}
 <h1>Welcome to QuickDoodle</h1>
-<a href="{% url 'canvas' %}">Click To Get Started</a>
+    <!-- <a href="{% url 'canvas' %}">Click To Get Started</a> -->
+
+<form method="POST" action="{% url 'canvas' %}">
+    {% csrf_token %}
+    <label for="time">Choose a time</label>
+    <select name="time" id="time">
+        <option value="-1">None</option>
+        <option value="30">30 Seconds</option>
+        <option value="60">1 Minute</option>
+        <option value="180">3 Minute</option>
+        <option value="300">5 Minute</option>
+    </select>
+    <label for="frame">Overall Frames</label>
+    <select name="frame" id="frame">
+        <option value="0">None</option>
+        <option value="5">5 Frames</option>
+        <option value="10">10 Frames</option>
+    </select>
+    <input type="submit" value="Click To Get Started"/>
+</form>
 {% endblock %}

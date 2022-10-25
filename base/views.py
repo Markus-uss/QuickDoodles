@@ -5,7 +5,10 @@ def home(request):
     return render(request, 'base/home.html')
 
 def canvas(request):
-    return render(request, 'base/canvas.html')
+    context = {'time': 0, 'frame': 0}
 
-def finalize(request):
-    return render(request, 'base/finalize.html')
+    if request.method == 'POST':
+        context['time'] = request.POST['time']
+        context['frame'] = request.POST['frame']
+        return render(request, 'base/canvas.html', context)
+    return render(request, 'base/canvas.html')

@@ -1,7 +1,43 @@
 const canvas = document.getElementById('drawing-board');
 const toolbar = document.getElementById('toolbar');
+const time_display = document.getElementById('timer')
+var time = document.getElementById('timer').innerText.split(" ")[0];
+const frames = document.getElementById('frames').innerText;
+const image_holder = document.getElementById('image_holder');
+const fps = time / frames;
 const ctx = canvas.getContext('2d');
+
 var image_list = new Array();
+
+function changeTime(text) {
+    time_display.innerHTML = text
+}
+
+function saveImage() {
+    image = canvas.toDataURL("image/png", 1.0);
+    image_list.push(image)
+}
+
+if (time == -1) {
+    changeTime('∞ Seconds');
+}
+
+function countdown() {
+    setTimeout(function(){
+        if (time % fps == 0) {
+            saveImage()
+        }
+        if (time > 0) {
+            time--;
+            changeTime(time + ' Seconds');
+            countdown();
+        }
+    }, 1000)
+}
+
+function togglePopup(){
+    document.getElementById("popup-1").classList.toggle("active");
+}
 
 const canvasOffsetX = canvas.offsetLeft;
 const canvasOffsetY = canvas.offsetTop;
@@ -33,10 +69,8 @@ toolbar.addEventListener('click', e => {
         link.click();   
     }  
     else if (e.target.id === 'finalize') {
-        console.log('done')
-        image = canvas.toDataURL("image/png", 1.0);
-        image_list.push(image)
-        console.log(image_list)
+        saveImage()
+        image_holder.value = image_list
     }
 });
 
@@ -76,3 +110,5 @@ canvas.addEventListener('mouseup', e => {
 });
 
 canvas.addEventListener('mousemove', draw);
+
+countdown(time)

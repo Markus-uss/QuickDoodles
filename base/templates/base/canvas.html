@@ -13,9 +13,21 @@
         <input id="lineWidth" name="lineWidth" type="number" value="5">
         <button id="clear">Clear</button>
         <button id="save">Save Image</button>
-        <a href="{% url 'finalize' %}"><button id="finalize">Finish</button></a>
+        <button id="finalize" onclick="togglePopup()">Finish</button>
+        <span id="timer">{{time}} Seconds</span>
+        <span id="frames">{{frame}}</span>
+    </div>
+    <div class="popup" id="popup-1">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="close-btn" onclick="togglePopup()">&times;</div>
+            <h2>Drawing Timelapse</h2>
+            <p>Some test information</p>
+            <p>AAAAAAAAAA</p>
+        </div>
     </div>
 </section>
+
 
 <script src="{% static 'js/canvas.js' %}"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/canvas.css' %}">
