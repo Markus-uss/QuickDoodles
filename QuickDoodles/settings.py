@@ -9,8 +9,9 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
 from pathlib import Path
+import yaml
+yaml_file = "./QuickDoodles/settings.yml"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-wgig=-fj-m8mfojkqj#e9x20daodjliz49u9taq5_5hrx^^@9a'
+
+with open(yaml_file, 'r') as f: 
+    settings_config = yaml.safe_load(f.read())
+    SECRET_KEY = settings_config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://quick-doodle.herokuapp.com']
 
 
 # Application definition

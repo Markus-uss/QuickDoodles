@@ -1,26 +1,46 @@
+// canvas elements
 const canvas = document.getElementById('drawing-board');
 const toolbar = document.getElementById('toolbar');
+const ctx = canvas.getContext('2d');
+const canvasOffsetX = canvas.offsetLeft;
+const canvasOffsetY = canvas.offsetTop;
+const toolbarOffsetY = toolbar.offsetTop;
+
+// timer variables
 const time_display = document.getElementById('timer')
+const frames = document.getElementById('frames').innerText;
 var time = document.getElementById('timer').innerText.split(" ")[0];
 const start_time = time
-const frames = document.getElementById('frames').innerText;
+const fps = time / frames;
+
+// popup elements
 const popup_display = document.getElementById('popup-1')
 const popup_content = document.getElementById('content')
-const fps = time / frames;
-const ctx = canvas.getContext('2d');
+
+// images and gif holders
+var gif_preview = document.getElementById('gif_preview')
 var image
 var image_list = new Array();
+var gif
 
 function changeTime(text) {
     time_display.innerHTML = text
 }
-
+gif
 function saveImage() {
     image = canvas.toDataURL("QuickDoodle/png");
     image_list.push(image)
 }
 
 function togglePopup() {
+    gifshot.createGIF({
+        'images': image_list
+        },function(obj) {
+        if(!obj.error) {
+            gif = obj.image;
+            gif_preview.src = gif;
+        }
+    });
     popup_display.classList.toggle("active");
 }
 
@@ -45,10 +65,6 @@ function countdown() {
         }
     }, 1000)
 }
-
-const canvasOffsetX = canvas.offsetLeft;
-const canvasOffsetY = canvas.offsetTop;
-const toolbarOffsetY = toolbar.offsetTop;
 
 canvas.width = window.innerWidth - canvasOffsetX - 4;
 canvas.height = window.innerHeight - toolbarOffsetY + 80;
@@ -97,21 +113,10 @@ popup_content.addEventListener('click', e => {
     }
 
     if (e.target.id === 'render') {
-        gifshot.createGIF({
-            'images': image_list
-            },function(obj) {
-            if(!obj.error) {
-                var image = obj.image,
-                animatedImage = document.createElement('img');
-                animatedImage.src = image;
-                document.body.appendChild(animatedImage);
-
-                var link = document.createElement('a');
-                link.download = "QuickDoodle.gif";
-                link.href = image;
-                link.click();   
-            }
-            });
+        var link = document.createElement('a');
+        link.download = "QuickDoodle.gif";
+        link.href = gif;
+        link.click();   
     }
 })
 
@@ -544,11 +549,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         sampleInterval: 10,
         numWorkers: 2,
         filter: '',
-        gifWidth: 200,
-        gifHeight: 200,
+        gifWidth: 500,
+        gifHeight: 500,
         interval: 0.1,
         numFrames: 10,
-        frameDuration: 1,
+        frameDuration: 2,
         keepCameraOn: false,
         images: [],
         video: null,
