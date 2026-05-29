@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import yaml
 
-yaml_file = "./settings.yml"
+yaml_file = "./QuickDoodles/settings.yml"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,9 +28,9 @@ with open(yaml_file, 'r') as f:
     SECRET_KEY = settings_config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['https://quick-doodle.herokuapp.com']
+ALLOWED_HOSTS = ['localhost','127.0.0.1']
 
 
 # Application definition

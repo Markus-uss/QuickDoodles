@@ -23,10 +23,12 @@ var image
 var image_list = new Array();
 var gif
 
+// update visual timer
 function changeTime(text) {
     time_display.innerHTML = text
 }
-gif
+
+// save current image to compile into gif
 function saveImage() {
     image = canvas.toDataURL("QuickDoodle/png");
     image_list.push(image)
@@ -79,9 +81,8 @@ if (window.innerHeight <= 146) {
 
 let isPainting = false;
 let lineWidth = 5;
-let startX;
-let startY;
 
+// Tracks when user clicks on the ui buttons and executes its function
 toolbar.addEventListener('click', e => {
     if (e.target.id === 'clear') {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -94,7 +95,7 @@ toolbar.addEventListener('click', e => {
         link.click();   
     }  
     else if (e.target.id === 'finalize') {
-        if (time == 0 || time == -1) {
+        if (time == 0) {
             togglePopup()
         }
         else {
@@ -102,6 +103,7 @@ toolbar.addEventListener('click', e => {
         }
     }
 });
+
 
 popup_content.addEventListener('click', e => {
     if (e.target.id === 'continue') {
@@ -127,37 +129,48 @@ toolbar.addEventListener('change', e => {
 
     if(e.target.id === 'lineWidth') {
         lineWidth = e.target.value;
+        ctx.lineWidth = lineWidth;
     }
     
 });
 
+// Creates stroke paths according to mouse position
 const draw = (e) => {
     if(!isPainting) {
         return;
     }
 
-    ctx.lineWidth = lineWidth;
     ctx.lineCap = 'round';
 
     ctx.lineTo(e.clientX - canvasOffsetX, e.clientY - canvasOffsetY);
+    ctx.moveTo(e.clientX - canvasOffsetX, e.clientY - canvasOffsetY);
     ctx.stroke();
+}
+
+// Stops the function above and resets the stroke path.
+function stopDrawing() {
+    isPainting = false;
+    ctx.stroke();
+    ctx.beginPath();
 }
 
 canvas.addEventListener('mousedown', (e) => {
     isPainting = true;
-    startX = e.clientX;
-    startY = e.clientY;
 });
 
 canvas.addEventListener('mouseup', e => {
-    isPainting = false;
-    ctx.stroke();
-    ctx.beginPath();
+    stopDrawing()
+});
+
+canvas.addEventListener('mouseleave', e => {
+    stopDrawing()
 });
 
 canvas.addEventListener('mousemove', draw);
 
 countdown(time)
+
+// ------------------------------------------------------------------------------------------------------------------------------
 
 // the code below belongs to Yahoo's gifshot and does not belong to me.
 
