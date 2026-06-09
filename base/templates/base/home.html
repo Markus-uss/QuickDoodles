@@ -1,27 +1,35 @@
 {% extends 'main.html' %}
 
 {% block content %}
-<h1>Welcome to QuickDoodle</h1>
-    <!-- <a href="{% url 'canvas' %}">Click To Get Started</a> -->
-
+<section class="container">
+    <h1 class="header">Welcome to QuickDoodle</h1>
+</section>
 <form method="POST" action="{% url 'canvas' %}">
     {% csrf_token %}
-    <label for="time">Choose a time</label>
-    <select name="time" id="time">
-        <option value="-1">None</option>
-        <option value="30">30 Seconds</option>
-        <option value="60">1 Minute</option>
-        <option value="180">3 Minute</option>
-        <option value="300">5 Minute</option>
-    </select>
-    <label for="frame">Overall Frames</label>
-    <select name="frame" id="frame">
-        <option value="0">None</option>
-        <option value="5">5 Frames</option>
-        <option value="10">10 Frames</option>
-        <option value="10">20 Frames</option>
-        <option value="10">30 Frames</option>
-    </select>
-    <input type="submit" value="Click To Get Started"/>
+    <section class="container" id="center">
+        <div>
+            <label for="time">Total time</label>
+            <select name="time" id="time">
+                <option value="-1">None</option>
+                <option value="30">30 Seconds</option>
+                <option value="60">1 Minute</option>
+                <option value="180">3 Minute</option>
+                <option value="300">5 Minute</option>
+            </select>
+        </div>
+        <div>
+            <label for="frame">Overall Frames</label>
+            <select name="frame" id="frame">
+                <option value="0">None</option>
+                <option value="5">5 Frames</option>
+                <option value="10">10 Frames</option>
+                <option value="10">20 Frames</option>
+                <option value="10">30 Frames</option>
+            </select>
+        </div>
+    </section>
+    <section class="container submit" style="top: 20px;">
+        <input type="submit" value="Click To Get Started"/>
+    </section>
 </form>
 {% endblock %}

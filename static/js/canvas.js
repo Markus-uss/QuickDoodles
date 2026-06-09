@@ -30,13 +30,14 @@ function changeTime(text) {
 
 // save current image to compile into gif
 function saveImage() {
-    image = canvas.toDataURL("QuickDoodle/png");
+    image = canvas.toDataURL("QuickDoodle/png", 0.3);
     image_list.push(image)
 }
 
+// Creates gif and reveals preview
 function togglePopup() {
     gifshot.createGIF({
-        'images': image_list
+        'images': image_list,
         },function(obj) {
         if(!obj.error) {
             gif = obj.image;
@@ -46,10 +47,12 @@ function togglePopup() {
     popup_display.classList.toggle("active");
 }
 
+// Changes time to infinite if there is no timer set.
 if (time == -1) {
     changeTime('∞ Seconds');
 }
 
+// Timer function that triggers popup when timer is finished
 function countdown() {
     setTimeout(function(){
         if (time % fps == 0) {
@@ -68,16 +71,11 @@ function countdown() {
     }, 1000)
 }
 
+// Canvas setup
 canvas.width = window.innerWidth - canvasOffsetX - 4;
 canvas.height = window.innerHeight - toolbarOffsetY + 80;
 ctx.fillStyle = "white";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-if (window.innerHeight <= 146) {
-    console.log("too small")
-    ctx.font = "20px Arial";
-    ctx.fillText("Too Small!!! Please expand your browser and reload", 10, 50);
-} 
 
 let isPainting = false;
 let lineWidth = 5;
@@ -104,7 +102,7 @@ toolbar.addEventListener('click', e => {
     }
 });
 
-
+// Tracks actions performed on popup to either add more time or download gif.
 popup_content.addEventListener('click', e => {
     if (e.target.id === 'continue') {
         time += parseInt(start_time);
@@ -122,6 +120,7 @@ popup_content.addEventListener('click', e => {
     }
 })
 
+// Tracks when the line color or line width is change and updates accordingly.
 toolbar.addEventListener('change', e => {
     if(e.target.id === 'stroke') {
         ctx.strokeStyle = e.target.value;
@@ -154,20 +153,22 @@ function stopDrawing() {
     ctx.beginPath();
 }
 
+// Creates event listeners that help the mouse draw
 canvas.addEventListener('mousedown', (e) => {
     isPainting = true;
 });
 
-canvas.addEventListener('mouseup', e => {
-    stopDrawing()
-});
-
-canvas.addEventListener('mouseleave', e => {
-    stopDrawing()
-});
+['mouseup', 'mouseleave'].forEach(event =>
+    canvas.addEventListener(event, stopDrawing)
+);
 
 canvas.addEventListener('mousemove', draw);
 
+canvas.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+});
+
+// Starts the timer
 countdown(time)
 
 // ------------------------------------------------------------------------------------------------------------------------------
@@ -559,7 +560,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     var noop = function noop() {};
     
     var defaultOptions = {
-        sampleInterval: 10,
+        sampleInterval: 1,
         numWorkers: 2,
         filter: '',
         gifWidth: 500,
@@ -1320,7 +1321,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                 var numberPixels = width * height;
                 var indexedPixels = new Uint8Array(numberPixels);
                 var k = 0;
-    
                 for (var i = 0; i < numberPixels; i++) {
                     var r = rgbComponents[k++];
                     var g = rgbComponents[k++];
@@ -1344,7 +1344,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                     width = _frame.width;
     
                 var imageData = frame.data;
-    
                 return this.processFrameWithQuantizer(imageData, width, height, sampleInterval);
             }
         };
@@ -1471,6 +1470,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     
         var using_local_palette = true;
         var palette = opts.palette;
+
         if (palette === undefined || palette === null) {
           using_local_palette = false;
           palette = global_palette;
@@ -1855,7 +1855,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                 var ev = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     
                 var data = ev.data;
-    
                 // Delete original data, and free memory
                 delete frame.data;
     
@@ -1954,7 +1953,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                     });
                 }
             });
-    
             gifWriter$$1.end();
     
             onRenderProgressCallback(1.0);
@@ -1966,7 +1964,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             if (utils.isFunction(callback)) {
                 bufferToString = this.bufferToString(buffer);
                 gif = 'data:image/gif;base64,' + utils.btoa(bufferToString);
-    
                 callback(gif);
             }
         },
@@ -2021,7 +2018,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                     ctx.drawImage(waterMark, waterMarkXCoordinate, waterMarkYCoordinate, waterMarkWidth, waterMarkHeight);
                 }
                 imageData = ctx.getImageData(0, 0, width, height);
-    
                 self.addFrameImageData(imageData);
             } catch (e) {
                 return '' + e;
@@ -2911,11 +2907,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       }
     
       var options = utils.mergeOptions(defaultOptions, userOptions) || {};
-      var lastCameraStream = userOptions.cameraStream;
       var images = options.images;
       var imagesLength = images ? images.length : 0;
-      var video = options.video;
-      var webcamVideoElement = options.webcamVideoElement;
+
+
+    // Disabling by removing variables cause not needed in this app.
+      var video = null;
+      var webcamVideoElement = null;
+      var lastCameraStream = null;
+    //   var video = options.video;
+    //   var lastCameraStream = userOptions.cameraStream;
+    //   var webcamVideoElement = options.webcamVideoElement;
     
       options = utils.mergeOptions(options, {
         'gifWidth': Math.floor(options.gifWidth),
@@ -2930,22 +2932,23 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
           'callback': callback,
           'options': options
         });
-      } else if (video) {
-        // If the user would like to create a GIF from an existing HTML5 video
-        existingVideo({
-          'existingVideo': video,
-          callback: callback,
-          options: options
-        });
-      } else {
-        // If the user would like to create a GIF from a webcam stream
-        existingWebcam({
-          lastCameraStream: lastCameraStream,
-          callback: callback,
-          webcamVideoElement: webcamVideoElement,
-          options: options
-        });
-      }
+      } 
+    //   else if (video) {
+    //     // If the user would like to create a GIF from an existing HTML5 video
+    //     existingVideo({
+    //       'existingVideo': video,
+    //       callback: callback,
+    //       options: options
+    //     });
+    //   } else {
+    //     // If the user would like to create a GIF from a webcam stream
+    //     existingWebcam({
+    //       lastCameraStream: lastCameraStream,
+    //       callback: callback,
+    //       webcamVideoElement: webcamVideoElement,
+    //       options: options
+    //     });
+    //   }
     }
     
     /*

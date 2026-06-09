@@ -1,14 +1,14 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block content %}
-<section class="container">
+<section>
     <div class="drawing-board">
         <canvas id="drawing-board"></canvas>
     </div>
     <div id="toolbar">
         <h1>Draw</h1>
         <label for="stroke">Stroke</label>
-        <input id="stroke" name="stroke" type="color">
+        <input id="stroke" name="stroke" type="color" list>
         <label for="lineWidth">Line Width</label>
         <input id="lineWidth" name="lineWidth" type="number" value="5">
         <button id="clear">Clear</button>
@@ -18,7 +18,7 @@
         <span id="frames">{{frame}}</span>
     </div>
     <div class="popup" id="popup-1">
-        <div class="overlay " onclick="togglePopup()"></div>
+        <div class="overlay" onclick="togglePopup()"></div>
         <div class="content" id="content">
             <div class="close-btn" onclick="togglePopup()">&times;</div>
             <h2>Times Up!!!</h2>

@@ -5,12 +5,12 @@ body {
 
 .drawing-board {
     position: relative;
-    bottom:-4px;
 }
 
 #drawing-board {
     border: 2px solid;
     border-color: black;
+    display: block;
 }
 
 #toolbar {
