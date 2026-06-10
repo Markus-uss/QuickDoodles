@@ -1,12 +1,16 @@
 {% extends 'main.html' %}
-
+{% load static %}
 {% block content %}
-<section class="container">
-    <h1 class="header">Welcome to QuickDoodle</h1>
+<section class="center" style="margin-top:120px;">
+    <img src="{% static 'images/QuickDoodle_Background.gif' %}" alt="Goofy_Background" class="center background-image">
+    <div>
+        <h1 class="header">Welcome to QuickDoodle</h1>
+        <div class="subtitle" style="bottom:45px;">draw your images into gifs</div>
+    </div>
 </section>
 <form method="POST" action="{% url 'canvas' %}">
     {% csrf_token %}
-    <section class="container" id="center">
+    <section class="center" id="center">
         <div>
             <label for="time">Total time</label>
             <select name="time" id="time">
@@ -23,12 +27,12 @@
                 <option value="0">None</option>
                 <option value="5">5 Frames</option>
                 <option value="10">10 Frames</option>
-                <option value="10">20 Frames</option>
-                <option value="10">30 Frames</option>
+                <option value="20">20 Frames</option>
+                <option value="30">30 Frames</option>
             </select>
         </div>
     </section>
-    <section class="container submit" style="top: 20px;">
+    <section class="center" style="margin-top: 20px;">
         <input type="submit" value="Click To Get Started"/>
     </section>
 </form>
