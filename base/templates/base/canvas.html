@@ -10,9 +10,9 @@
         <h1>Draw</h1>
         <label for="stroke">Stroke</label>
         <input id="stroke" name="stroke" type="color" list>
-        <label for="lineWidth">Line Width</label>
-        <input id="lineWidth" name="lineWidth" type="number" value="20">
-        <button id="clear">Clear</button>
+        <label for="lineWidth" class="toolbar-spacing">Line Width</label>
+        <input id="lineWidth" name="lineWidth" type="number" value="20" style="width:70px;">
+        <button id="clear" class="toolbar-spacing">Clear</button>
         <button id="save">Save Image</button>
         <button id="finalize">Finish</button>
         <span id="timer">{{time}} Seconds</span>
@@ -24,7 +24,7 @@
             <div class="close-btn" onclick="togglePopup()">&times;</div>
             <h2>Times Up!!!</h2>
             <h3>Preview</h3>
-            <img id="gif_preview" alt="gif_preview" width="150", height="150">
+            <img id="gif_preview" alt="LOADING GIF" width="150", height="150">
             <br>
             <button id="continue">Add {{time}} More Seconds</button>
             <button id="render">Download</button>

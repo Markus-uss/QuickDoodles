@@ -1,15 +1,22 @@
 from django.shortcuts import render, redirect
-from .forms import SuggestionForm
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Create your views here.
 def form(request):
-    form = SuggestionForm()
-    context = {'form': form}
-
     if request.method == 'POST':
-        form = SuggestionForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
+        subject = request.POST['subject']
+        message = request.POST['message']
+        main_subject = 'QuickDoodles: ' + subject
 
-    return render(request, 'feedback/suggestion_form.html', context)
+        send_mail(
+            main_subject,
+            message,
+            settings.EMAIL_HOST_USER,
+            [settings.EMAIL_HOST_USER],
+            )
+
+        print("EMAIL SENT")
+        return redirect('home')
+
+    return render(request, 'feedback/suggestion_form.html')

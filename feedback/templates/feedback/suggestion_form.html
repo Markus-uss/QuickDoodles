@@ -1,11 +1,15 @@
 {% extends 'main.html' %}
-
+{% load static %}
 {% block content %}
-<div>
-    <form method="POST" action="">
+<div style="padding:40px;">
+    <div class="form-header">Suggestion</div>
+    <form method="POST" action="" class="form-container">
         {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Submit"/>
+        <input type="text" name="subject" placeholder="Subject" class="form-input">
+        <textarea type="text" name="message" placeholder="Body" class="form-input" id="form-textarea"></textarea>
+        <input type="submit" value="Send" class="form-submit"/>
     </form>
 </div>
+<img src="{% static 'images/QuickDoodle_Form.gif' %}" alt="Envelope Gif" class="form-background-image">
+<link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/feedback.css' %}">
 {% endblock %}

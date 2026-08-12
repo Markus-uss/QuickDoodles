@@ -1,7 +1,7 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block content %}
-<section class="center" style="margin-top:120px;">
+<section class="center" style="margin-top:160px;"> 
     <img src="{% static 'images/QuickDoodle_Background.gif' %}" alt="Goofy_Background" class="center background-image">
     <div>
         <h1 class="header">Welcome to QuickDoodle</h1>
@@ -36,4 +36,12 @@
         <input type="submit" value="Click To Get Started"/>
     </section>
 </form>
+
+<section style="position:relative; top:300px;">
+    <h1 class="center header2 underline">What is QuickDoodles?</h1>
+    <div class="center subtitle content-block" style="color:black;justify-content:center;">
+        QuickDoodle is a web app that creates a time-lapse of your drawing on canvas based on your set timeframe parameters.
+        This is created with the help of gifshot, an image to gif webapp and is developed using Django as its backend framework.
+    </div>
+</section>
 {% endblock %}

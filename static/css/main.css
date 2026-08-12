@@ -17,13 +17,19 @@ body {
     height: 50px;
     padding: 8px;
     padding-right: 80vw;
-    color: white;
     font-family: "Source Sans Pro Topnav", sans-serif;
     font-size: 18px;
 }
 
 .navbar a {
     padding: 10px;
+    color: white;
+    transition: color 0.3s ease;
+
+}
+
+.navbar a:hover {
+    color:#b8d2fc;
 }
 
 a {
@@ -57,11 +63,29 @@ a {
     text-align: center;
 }
 
+.header2 {
+    font-size: 40px;
+    text-align: center;
+}
+
+.underline {
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 8px;
+}
+
 .subtitle {
     font-size: 20px;
     text-align: center;
     color: #787878;
     position: relative;
+}
+
+.content-block {
+    width:100%; 
+    max-width: 800px;
+    text-align: center;
+    margin: 0 auto;
 }
 
 .background-image {

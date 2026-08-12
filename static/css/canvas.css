@@ -7,6 +7,10 @@ body {
     position: relative;
 }
 
+.toolbar-spacing {
+    margin-left:10px;
+}
+
 #drawing-board {
     border: 2px solid;
     border-color: black;

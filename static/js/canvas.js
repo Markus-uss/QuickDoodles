@@ -43,8 +43,8 @@ function togglePopup() {
         'numWorkers': 2,
         'numFrames': frames,
         'interval': 0.1,
-        // 'gifHeight': canvas.height / 2,
-        // 'gifWidth': canvas.width / 2
+        // 'gifHeight': canvas.height /2,
+        // 'gifWidth': canvas.width /2
         },function(obj) {
         if(!obj.error) {
             gif = obj.image;
