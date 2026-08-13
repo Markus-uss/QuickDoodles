@@ -1,7 +1,10 @@
 # QuickDoodles
-A time-lapse drawing website developed using Django as its back end, and VueJS and AngularJS as its front end.
+A time-lapse drawing web app developed using Django as its back end. Enter your set timeframe and doodle away, the web app will compile that into a downloadable gif.
 
 ## Credits
-- Canvas Drawing Logic by [JavaScript Academy](https://www.youtube.com/watch?v=mRDo-QXVUv8)
-- Popup Window by [CodingFlag](https://www.youtube.com/watch?v=iE_6pQ3RlZU)
 - Gifshot (Gif Compiler) by [Yahoo](https://github.com/yahoo/gifshot)
+
+LIVE DEMO:
+https://quickdoodles.onrender.com/
+
+Suggestions page not working due to limitations of free plan on render.
